@@ -9,7 +9,7 @@ Copy-Item -Path "C:\temp\DUO\DuoWindowsLogon.adml" -Destination "C:\Windows\SYSV
 Copy-Item -Path "C:\temp\DUO\DuoWindowsLogon.admx" -Destination "C:\Windows\SYSVOL\sysvol\$env:USERDNSDomain\Policies\PolicyDefinitions\"
 
 #Copy DUO Installer and create SMD shared folder
-Copy-Item -Path "C:\temp\DUO\DuoWindowsLogon64.msi" -Destination "C:\DUO\"
+
 New-Item -Path "C:\DUO" -ItemType Directory
 $Parameters = @{
     Name = 'DUO'
@@ -18,6 +18,7 @@ $Parameters = @{
     ReadAccess = 'Domain Computers', 'Domain Controllers'
 }
 New-SmbShare @Parameters
+Copy-Item -Path "C:\temp\DUO\DuoWindowsLogon64.msi" -Destination "C:\DUO\"
 
 #Create DUO GPOs
 New-GPO -Name "Duo-Windows Logon"
@@ -40,3 +41,6 @@ pause
 Start-Process -FilePath "C:\Program Files\Duo Security Authentication Proxy\bin\local_proxy_manager-win32-x64\Duo_Authentication_Proxy_Manager.exe"
 Write-Host "Enter the following IP address into the Duo Admin Portal"
 ipconfig
+$filter = "(&(objectCategory=computer)(objectClass=computer)(cn=$env:COMPUTERNAME))"
+$dn = ([adsisearcher]$filter).FindOne().Properties.distinguishedname
+Write-Host "DN:   $($dn)" -ForegroundColor Cyan
