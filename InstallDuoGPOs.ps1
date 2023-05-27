@@ -38,4 +38,5 @@ Write-Host "Drop in the configuration file into the window that popped up." -For
 Write-Host "Continue once ready to start the Application Proxy." -ForegroundColor Green
 pause
 Start-Process -FilePath "C:\Program Files\Duo Security Authentication Proxy\bin\local_proxy_manager-win32-x64\Duo_Authentication_Proxy_Manager.exe"
+Write-Host "Enter the following IP address into the Duo Admin Portal"
 ipconfig
