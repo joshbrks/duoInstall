@@ -31,9 +31,11 @@ $url = "https://dl.duosecurity.com/duoauthproxy-latest.exe"
 $outFile = "C:\temp\DuoAuthProxy.exe"
 Invoke-WebRequest -Uri $url -OutFile $outFile
 Start-Process -FilePath C:\temp\DuoAuthProxy.exe /S
+Remove-Item "C:\Program Files\Duo Security Authentication Proxy\conf\authproxy.cfg"
 Invoke-Item "C:\Program Files\Duo Security Authentication Proxy\conf"
-Write-Host "ADD WINDOWS AD DIRECTORY SYNC..."
+Write-Host "ADD WINDOWS AD DIRECTORY SYNC..." -ForegroundColor Green
 Write-Host "Drop in the configuration file into the window that popped up." -ForegroundColor Green
 Write-Host "Continue once ready to start the Application Proxy." -ForegroundColor Green
+pause
 Start-Process -FilePath "C:\Program Files\Duo Security Authentication Proxy\bin\local_proxy_manager-win32-x64\Duo_Authentication_Proxy_Manager.exe"
 ipconfig
